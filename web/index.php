@@ -3,7 +3,13 @@
 require_once __DIR__.'/../vendor/autoload.php';
 
 $app = new Silex\Application();
-$app['debug'] = true;
+$app['debug'] = false;
+
+$app->match('/', function() use ($app)
+{
+	// there is no index, perhaps later show documentation or perform a redirect
+	return $app->json(array('message' => 'Nothing here.'));
+});
 
 $app->error(function(\Exception $e, $code) use ($app)
 {
