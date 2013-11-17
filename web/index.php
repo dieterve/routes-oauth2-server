@@ -8,6 +8,7 @@ $app['debug'] = true;
 // providers
 $app->register(new Silex\Provider\UrlGeneratorServiceProvider());
 $app->register(new Silex\Provider\SessionServiceProvider());
+$app->register(new Igorw\Silex\ConfigServiceProvider(__DIR__."/../config/parameters.yml"));
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
 	'twig.path' => __DIR__.'/../src',
 ));

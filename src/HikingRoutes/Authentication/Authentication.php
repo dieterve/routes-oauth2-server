@@ -17,9 +17,9 @@ class Authentication implements ControllerProviderInterface
 	 */
 	public function setup(Application $app)
 	{
-		$dsn      = 'mysql:dbname=oauth2;host=localhost';
-		$username = 'root';
-		$password = 'bucht';
+		$dsn = 'mysql:dbname=' . $app['database']['name'] . ';host=' . $app['database']['hostname'];
+		$username = $app['database']['username'];
+		$password = $app['database']['password'];
 
 		// create PDO-based sqlite storage
 		$storage = new Pdo(array('dsn' => $dsn, 'username' => $username, 'password' => $password));
@@ -32,7 +32,7 @@ class Authentication implements ControllerProviderInterface
 		// instantiate the oauth server
 		$server = new OAuth2Server($storage, array('enforce_state' => true, 'allow_implicit' => true), $grantTypes);
 
-		// add the server to the silex "container" so we can use it in our controllers (see src/OAuth2Demo/Server/Controllers/.*)
+		// add the server to the silex "container" so we can use it in our controllers
 		$app['oauth_server'] = $server;
 
 		/**

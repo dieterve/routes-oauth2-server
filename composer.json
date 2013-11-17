@@ -4,7 +4,9 @@
 		"symfony/twig-bridge": "2.1.*",
 		"bshaffer/oauth2-server-php": "v1.0",
 		"bshaffer/oauth2-server-httpfoundation-bridge": "v1.0",
-		"guzzle/guzzle": "~3.7"
+		"guzzle/guzzle": "~3.7",
+		"symfony/yaml": "~2.1",
+		"igorw/config-service-provider": "1.2.*"
 	},
 	"autoload": {
 		"psr-0": {

@@ -36,8 +36,8 @@ class Authorize
 		$query = array(
 			'grant_type'    => 'authorization_code',
 			'code'          => $authenticationCode,
-			'client_id'     => 'myroutes',
-			'client_secret' => '5LK36bGnTKc23Dl1dXY',
+			'client_id'     => $app['hikingroutes']['clientId'],
+			'client_secret' => $app['hikingroutes']['clientSecret'],
 			'redirect_uri' => $urlGenerator->generate('myroutes_authorize', null, true)
 		);
 		$endpoint = $urlGenerator->generate('authentication_token', null, true);

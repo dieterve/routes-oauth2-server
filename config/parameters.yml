@@ -1,0 +1,9 @@
+database:
+    hostname: localhost
+    username: root
+    password: bucht
+    name: oauth2
+
+hikingroutes:
+    clientId: myroutes
+    clientSecret: 5LK36bGnTKc23Dl1dXY
