@@ -58,6 +58,10 @@ class Authentication implements ControllerProviderInterface
 			array(new \HikingRoutes\Authentication\Controllers\Authorize(), 'authorize')
 		);
 		$routing->post(
+			'/authorize',
+			array(new \HikingRoutes\Authentication\Controllers\Authorize(), 'authorizePost')
+		);
+		$routing->post(
 			'/token',
 			array(new \HikingRoutes\Authentication\Controllers\Token(), 'token')
 		);

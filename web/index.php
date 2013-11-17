@@ -5,6 +5,10 @@ require_once __DIR__.'/../vendor/autoload.php';
 $app = new Silex\Application();
 $app['debug'] = true;
 
+$app->register(new Silex\Provider\TwigServiceProvider(), array(
+	'twig.path' => __DIR__.'/../src',
+));
+
 $app->match('/', function() use ($app)
 {
 	// there is no index, perhaps later show documentation or perform a redirect
@@ -45,5 +49,3 @@ $app->error(function(\Exception $e, $code) use ($app)
 // create an http foundation request implementing OAuth2\RequestInterface
 $request = OAuth2\HttpFoundationBridge\Request::createFromGlobals();
 $app->run($request);
-
-//$app->run();
