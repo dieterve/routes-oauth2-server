@@ -56,7 +56,7 @@ class Authentication implements ControllerProviderInterface
 		$routing->get(
 			'/authorize',
 			array(new \HikingRoutes\Authentication\Controllers\Authorize(), 'authorize')
-		);
+		)->bind('authentication_authorize');
 		$routing->post(
 			'/authorize',
 			array(new \HikingRoutes\Authentication\Controllers\Authorize(), 'authorizePost')
@@ -64,7 +64,7 @@ class Authentication implements ControllerProviderInterface
 		$routing->post(
 			'/token',
 			array(new \HikingRoutes\Authentication\Controllers\Token(), 'token')
-		);
+		)->bind('authentication_token');
 
 		return $routing;
 	}

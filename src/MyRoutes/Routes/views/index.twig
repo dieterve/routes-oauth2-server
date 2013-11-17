@@ -1,0 +1,23 @@
+<h3>
+    Welcome to MyRoutes!
+</h3>
+
+{% if logged_in %}
+    <p>
+        You are connect to <strong>HikingRoutes</strong> with these credentials:
+        <pre>
+            username:
+            first name:
+            last name:
+        </pre>
+
+    </p>
+{% else %}
+    <p>
+        You have not connected with <strong>HikingRoutes</strong> yet. Please connect to be able
+        to display your routes.
+    </p>
+    <p>
+        <a href="{{ path('authentication_authorize') }}?response_type=code&client_id=myroutes&redirect_uri={{ url('myroutes_authorize')|url_encode() }}&state={{session_id}}">Connect with HikingRoutes.</a>
+    </p>
+{% endif %}

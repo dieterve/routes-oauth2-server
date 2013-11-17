@@ -5,9 +5,18 @@ require_once __DIR__.'/../vendor/autoload.php';
 $app = new Silex\Application();
 $app['debug'] = true;
 
+// providers
+$app->register(new Silex\Provider\UrlGeneratorServiceProvider());
+$app->register(new Silex\Provider\SessionServiceProvider());
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
 	'twig.path' => __DIR__.'/../src',
 ));
+
+$app['http_client'] = new \Guzzle\Http\Client();
+
+$app->before(function($request) {
+	$request->getSession()->start();
+});
 
 $app->match('/', function() use ($app)
 {
@@ -16,6 +25,7 @@ $app->match('/', function() use ($app)
 });
 
 $app->mount('/authentication', new HikingRoutes\Authentication\Authentication());
+$app->mount('/myroutes', new MyRoutes\Routes\Routes());
 
 $app->error(function(\Exception $e, $code) use ($app)
 {
