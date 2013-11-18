@@ -25,7 +25,7 @@ class Authentication implements ControllerProviderInterface
 		);
 
 		// instantiate the oauth server
-		$server = new OAuth2Server($storage, array('enforce_state' => true, 'allow_implicit' => true), $grantTypes);
+		$server = new OAuth2Server($storage, array('enforce_state' => true, 'allow_implicit' => true, 'access_lifetime' => 60 * 60 * 24), $grantTypes);
 
 		// add the server to the silex "container" so we can use it in our controllers
 		$app['oauth_server'] = $server;
