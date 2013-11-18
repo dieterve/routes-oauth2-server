@@ -20,7 +20,7 @@ class Authorize
 			return $server->getResponse();
 		}
 
-		// display the "do you want to authorize?" form
+		// display the login form
 		return $app['twig']->render(
 			'HikingRoutes/Authentication/views/authorize.twig',
 			array('client_id' => $app['request']->query->get('client_id'), 'errorMessage' => false)
@@ -46,7 +46,7 @@ class Authorize
 			$error = 'Provide both username and password.';
 		}
 
-		// use user credentials functionality of the vendor. This allows us to enable another level
+		// use user credentials functionality of the OAuth vendor. This allows us to enable another level
 		// of grant type in the future. @see OAuth2\GrantType\UserCredentials
 		elseif(!$server->getStorage('user_credentials')->checkUserCredentials($username, $password))
 		{

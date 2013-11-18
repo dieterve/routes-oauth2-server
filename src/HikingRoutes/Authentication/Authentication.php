@@ -8,7 +8,6 @@ use OAuth2\HttpFoundationBridge\Response as BridgeResponse;
 use OAuth2\Server as OAuth2Server;
 use OAuth2\Storage\Pdo;
 use OAuth2\GrantType\AuthorizationCode;
-use OAuth2\GrantType\UserCredentials;
 
 class Authentication implements ControllerProviderInterface
 {
