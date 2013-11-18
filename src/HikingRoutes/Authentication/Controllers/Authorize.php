@@ -65,8 +65,8 @@ class Authorize
 		// no errors, authentication successful
 		else
 		{
-			// call the oauth server and return the response
-			return $server->handleAuthorizeRequest($app['request'], $response, true);
+			// call the oauth server and associate the username with this auth code
+			return $server->handleAuthorizeRequest($app['request'], $response, true, $username);
 		}
 	}
 }
