@@ -4,14 +4,36 @@
 
 {% if logged_in %}
     <p>
-        You are connect to <strong>HikingRoutes</strong> with these credentials:
-        <pre>
-            username:
-            first name:
-            last name:
-        </pre>
-
+        You are connect to <strong>HikingRoutes</strong>.
     </p>
+    <p>
+        HikingRoutes has this info about you:
+    </p>
+    <pre>
+        username:
+        first name:
+        last name:
+    </pre>
+    <p>
+        Your HikingRoutes account contains these routes:
+    </p>
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Distance</th>
+            <th>Added on</th>
+        </tr>
+        {% for route in routes %}
+            <tr>
+                <td>{{ route.id }}</td>
+                <td>{{ route.title }}</td>
+                <td>{{ route.distance }}m</td>
+                <td>{{ route.added_on }}</td>
+            </tr>
+        {% endfor %}
+    </table>
 {% else %}
     <p>
         You have not connected with <strong>HikingRoutes</strong> yet. Please connect to be able

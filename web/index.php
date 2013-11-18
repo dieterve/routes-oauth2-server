@@ -30,6 +30,7 @@ $app->match('/', function() use ($app)
 	return $app->json(array('message' => 'Nothing here.'));
 });
 $app->mount('/authentication', new HikingRoutes\Authentication\Authentication());
+$app->mount('/routes', new HikingRoutes\Routes\Routes());
 $app->mount('/myroutes', new MyRoutes\Routes\Routes());
 
 // error handling in json format
