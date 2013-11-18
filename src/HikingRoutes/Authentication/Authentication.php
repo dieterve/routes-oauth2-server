@@ -17,12 +17,8 @@ class Authentication implements ControllerProviderInterface
 	 */
 	public function setup(Application $app)
 	{
-		$dsn = 'mysql:dbname=' . $app['database']['name'] . ';host=' . $app['database']['hostname'];
-		$username = $app['database']['username'];
-		$password = $app['database']['password'];
-
-		// create PDO-based sqlite storage
-		$storage = new Pdo(array('dsn' => $dsn, 'username' => $username, 'password' => $password));
+		// create storage which contains our users and tokens
+		$storage = new Pdo($app['database']);
 
 		// create array of supported grant types
 		$grantTypes = array(
