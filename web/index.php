@@ -12,12 +12,18 @@ $app->register(new Igorw\Silex\ConfigServiceProvider(__DIR__.'/../config/paramet
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
 	'twig.path' => __DIR__.'/../src',
 ));
-$app['http_client'] = new \Guzzle\Http\Client();
-$app['database'] = new Pdo(
-	'mysql:dbname=' . $app['config']['database']['name'] . ';host=' . $app['config']['database']['hostname'],
-	$app['config']['database']['username'],
-	$app['config']['database']['password']
-);
+$app['http_client'] = function()
+{
+	return new \Guzzle\Http\Client();
+};
+$app['database'] = $app->share(function() use ($app)
+{
+	return new Pdo(
+		'mysql:dbname=' . $app['config']['database']['name'] . ';host=' . $app['config']['database']['hostname'],
+		$app['config']['database']['username'],
+		$app['config']['database']['password']
+	);
+});
 
 $app->before(function($request) {
 	$request->getSession()->start();
