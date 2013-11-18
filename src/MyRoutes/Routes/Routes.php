@@ -23,6 +23,10 @@ class Routes implements ControllerProviderInterface
 			'/authorize',
 			array(new \MyRoutes\Routes\Controllers\Authorize(), 'authorize')
 		)->bind('myroutes_authorize');
+		$routing->get(
+			'/logout',
+			array(new \MyRoutes\Routes\Controllers\Logout(), 'logout')
+		)->bind('myroutes_logout');
 
 		return $routing;
 	}
