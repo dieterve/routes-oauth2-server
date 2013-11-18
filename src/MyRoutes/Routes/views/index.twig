@@ -33,6 +33,12 @@
                 <td>{{ route.added_on }}</td>
             </tr>
         {% endfor %}
+
+        {% if routes is empty %}
+            <tr>
+                <td colspan="4">You have no routes in your HikingRoutes account.</td>
+            </tr>
+        {% endif %}
     </table>
 
     <h3>API resources endpoints:</h3>
