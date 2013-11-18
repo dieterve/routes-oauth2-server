@@ -15,7 +15,7 @@ class Index
 			$accessToken = $app['session']->get('access_token');
 			$templateVariables['logged_in'] = true;
 
-//			$templateVariables['userInfo'] = $this->getUserInfo($app, $accessToken);
+			$templateVariables['userInfo'] = $this->getUserInfo($app, $accessToken);
 			$templateVariables['routes'] = $this->getRoutes($app, $accessToken);
 		}
 
@@ -55,11 +55,16 @@ class Index
 	 */
 	protected function getUserInfo($app, $accessToken)
 	{
-		$endpoint = $app['url_generator']->generate('user_user', array('access_token' => $accessToken), true);
+		$endpoint = $app['url_generator']->generate('user_me', array('access_token' => $accessToken), true);
 
 		$response = $app['http_client']->get($endpoint, null)->send();
 		$json = json_decode((string) $response->getBody(), true);
 
-		return $json;
+		if(array_key_exists('user', $json))
+		{
+			return $json['user'];
+		}
+
+		return array();
 	}
 }

@@ -31,6 +31,7 @@ $app->match('/', function() use ($app)
 });
 $app->mount('/authentication', new HikingRoutes\Authentication\Authentication());
 $app->mount('/routes', new HikingRoutes\Routes\Routes());
+$app->mount('/users', new HikingRoutes\Users\Users());
 $app->mount('/myroutes', new MyRoutes\Routes\Routes());
 
 // error handling in json format

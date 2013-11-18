@@ -54,6 +54,7 @@ class Authorize
 		else
 		{
 			$session->set('access_token', $json['access_token']);
+			$session->set('username', $json['username']);
 			return $app->redirect($urlGenerator->generate('myroutes_index'));
 		}
 	}
