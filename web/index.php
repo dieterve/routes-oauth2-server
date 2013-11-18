@@ -24,6 +24,16 @@ $app['database'] = $app->share(function() use ($app)
 		$app['config']['database']['password']
 	);
 });
+$app['memcached'] = $app->share(function() use ($app)
+{
+	$memcached = new \Memcached();
+	$memcached->addServer(
+		$app['config']['memcached']['hostname'],
+		$app['config']['memcached']['port']
+	);
+	$memcached->setOption(\Memcached::OPT_PREFIX_KEY, $app['config']['memcached']['prefix']);
+	return $memcached;
+});
 
 $app->before(function($request) {
 	$request->getSession()->start();

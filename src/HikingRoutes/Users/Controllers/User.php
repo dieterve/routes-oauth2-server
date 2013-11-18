@@ -18,11 +18,20 @@ class User
 		if (!$server->verifyResourceRequest($app['request'], $response)) {
 			return $server->getResponse();
 		} else {
-			// fetch user info from the database
-			$statement = $app['database']->prepare('SELECT username, first_name, last_name FROM oauth_users WHERE username = :username');
-			$statement->execute(array('username' => $username));
 
-			$userInfo = $statement->fetch(\PDO::FETCH_ASSOC);
+			// exists in cache?
+			$memcached = $app['memcached'];
+			$userInfo = $memcached->get('userinfo_' . $username);
+			if($userInfo === false)
+			{
+				// fetch user info from the database
+				$statement = $app['database']->prepare('SELECT username, first_name, last_name FROM oauth_users WHERE username = :username');
+				$statement->execute(array('username' => $username));
+
+				$userInfo = $statement->fetch(\PDO::FETCH_ASSOC);
+
+				$memcached->set('userinfo_' . $username, $userInfo);
+			}
 
 			if(empty($userInfo))
 			{

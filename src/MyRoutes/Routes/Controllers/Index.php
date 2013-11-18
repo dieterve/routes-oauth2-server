@@ -37,17 +37,26 @@ class Index
 	 */
 	protected function getRoutes($app, $accessToken)
 	{
-		$endpoint = $app['url_generator']->generate('routes_index', array('access_token' => $accessToken), true);
+		// exists in cache?
+		$memcached = $app['memcached'];
+		$routes = $memcached->get('myroutes_routes');
 
-		$response = $app['http_client']->get($endpoint, null)->send();
-		$json = json_decode((string) $response->getBody(), true);
-
-		if(array_key_exists('routes', $json))
+		// not a cache hit, fetch live data
+		if($routes === false)
 		{
-			return $json['routes'];
+			$endpoint = $app['url_generator']->generate('routes_index', array('access_token' => $accessToken), true);
+
+			$response = $app['http_client']->get($endpoint, null)->send();
+			$json = json_decode((string) $response->getBody(), true);
+
+			if(array_key_exists('routes', $json))
+			{
+				$routes = $json['routes'];
+				$memcached->set('myroutes_routes', $routes);
+			}
 		}
 
-		return array();
+		return $routes;
 	}
 
 	/**
@@ -55,16 +64,25 @@ class Index
 	 */
 	protected function getUserInfo($app, $accessToken)
 	{
-		$endpoint = $app['url_generator']->generate('user_me', array('access_token' => $accessToken), true);
+		// exists in cache?
+		$memcached = $app['memcached'];
+		$userInfo = $memcached->get('myroutes_userinfo');
 
-		$response = $app['http_client']->get($endpoint, null)->send();
-		$json = json_decode((string) $response->getBody(), true);
-
-		if(array_key_exists('user', $json))
+		// not a cache hit, fetch live data
+		if($userInfo === false)
 		{
-			return $json['user'];
+			$endpoint = $app['url_generator']->generate('user_me', array('access_token' => $accessToken), true);
+
+			$response = $app['http_client']->get($endpoint, null)->send();
+			$json = json_decode((string) $response->getBody(), true);
+
+			if(array_key_exists('user', $json))
+			{
+				$userInfo = $json['user'];
+				$memcached->set('myroutes_userinfo', $userInfo);
+			}
 		}
 
-		return array();
+		return $userInfo;
 	}
 }

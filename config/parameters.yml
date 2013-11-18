@@ -8,3 +8,8 @@ config:
     hikingroutes:
         clientId: myroutes
         clientSecret: 5LK36bGnTKc23Dl1dXY
+
+    memcached:
+        hostname: localhost
+        port: 11211
+        prefix: oauthserver_

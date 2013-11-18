@@ -21,14 +21,22 @@ class Index
 			$token = $server->getAccessTokenData($app['request'], $response);
 			$username = $token['user_id'];
 
-			// fetch routes for this user from the database
-			$statement = $app['database']->prepare('SELECT * FROM routes WHERE username = :username ORDER BY added_on DESC');
-			$statement->execute(array('username' => $username));
-
-			$routes = array();
-			while($route = $statement->fetch(\PDO::FETCH_ASSOC))
+			// exists in cache?
+			$memcached = $app['memcached'];
+			$routes = $memcached->get('routes_' . $username);
+			if($routes === false)
 			{
-				$routes[] = $route;
+				// fetch routes for this user from the database
+				$statement = $app['database']->prepare('SELECT * FROM routes WHERE username = :username ORDER BY added_on DESC');
+				$statement->execute(array('username' => $username));
+
+				$routes = array();
+				while($route = $statement->fetch(\PDO::FETCH_ASSOC))
+				{
+					$routes[] = $route;
+				}
+
+				$memcached->set('routes_' . $username, $routes);
 			}
 
 			$data = array(
