@@ -34,6 +34,13 @@
             </tr>
         {% endfor %}
     </table>
+
+    <h3>API resources endpoints:</h3>
+    <pre>
+        curl {{ url('routes_index') }}?access_token={{ app.session.get('access_token') }}
+        curl {{ url('user_me') }}?access_token={{ app.session.get('access_token') }}
+        curl {{ url('user_user', {username: userInfo.username}) }}?access_token={{ app.session.get('access_token') }}
+    </pre>
 {% else %}
     <p>
         You have not connected with <strong>HikingRoutes</strong> yet. Please connect to be able
