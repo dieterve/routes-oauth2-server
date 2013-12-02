@@ -1,8 +1,8 @@
 config:
     database:
         hostname: localhost
-        username: root
-        password: bucht
+        username: username
+        password: password
         name: oauth2
 
     hikingroutes:
